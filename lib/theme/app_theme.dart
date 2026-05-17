@@ -29,12 +29,37 @@ class AppTheme {
         fontWeight: FontWeight.w600,
         color: AppColor.textPrimary,
       ),
-      bodyLarge: TextStyle(fontSize: 16, color: AppColor.textPrimary),
+      titleMedium: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: AppColor.textPrimary,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: AppColor.textPrimary,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: AppColor.textPrimary,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: AppColor.textSecondary,
+      ),
       headlineSmall: TextStyle(fontSize: 14, color: AppColor.textSecondary),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColor.textPrimary,
       foregroundColor: AppColor.background,
+    ),
+    scrollbarTheme: ScrollbarThemeData(
+      thumbColor: WidgetStateProperty.all(AppColor.textSecondary),
+      trackColor: WidgetStateProperty.all(AppColor.background),
+      radius: const Radius.circular(10),
+      thickness: WidgetStateProperty.all(6),
     ),
   );
 }
