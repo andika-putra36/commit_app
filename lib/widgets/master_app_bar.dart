@@ -1,3 +1,5 @@
+import 'package:commit_app/utils/app_size.dart';
+
 import '../theme/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +11,16 @@ class MasterAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title),
+      // title: Text(title),
+      title: Row(
+        children: [
+          Image.asset(
+            'assets/images/logo/commit_logo.png',
+            height: AppSize.appBarHeight(context),
+            fit: BoxFit.fill,
+          ),
+        ],
+      ),
       backgroundColor: AppColor.background,
       centerTitle: true,
       shape: RoundedRectangleBorder(
