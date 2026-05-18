@@ -9,3 +9,12 @@ class CleanDivider extends StatelessWidget {
     return SizedBox(height: AppSize.screenHeight(context) / 30);
   }
 }
+
+class CleanDividerSmall extends StatelessWidget {
+  const CleanDividerSmall({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(height: AppSize.screenHeight(context) / 50);
+  }
+}

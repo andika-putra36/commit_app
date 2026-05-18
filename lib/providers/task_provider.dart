@@ -12,6 +12,7 @@ class TaskProvider with ChangeNotifier {
 
   Future<void> getTasks() async {
     try {
+      // print('getTasks()');
       Uri url = Uri.parse(ApiConstants.getTasks);
 
       final httpResponse = await http.get(url);

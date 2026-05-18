@@ -61,5 +61,31 @@ class AppTheme {
       radius: const Radius.circular(10),
       thickness: WidgetStateProperty.all(6),
     ),
+
+    // inputDecorationTheme: InputDecorationTheme(
+    //   // filled: true,
+    //   // fillColor: AppColor.textPrimary,
+    //   labelStyle: const TextStyle(
+    //     color: AppColor.textPrimary,
+    //     fontWeight: FontWeight.normal,
+    //   ),
+    //   hintStyle: const TextStyle(
+    //     color: AppColor.textSecondary,
+    //     fontWeight: FontWeight.normal,
+    //   ),
+    //   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+    //   enabledBorder: OutlineInputBorder(
+    //     borderRadius: BorderRadius.circular(12),
+    //     borderSide: const BorderSide(color: AppColor.border),
+    //   ),
+    //   focusedBorder: OutlineInputBorder(
+    //     borderSide: BorderSide(color: AppColor.textPrimary, width: 2),
+    //   ),
+    // ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: AppColor.textPrimary,
+      selectionColor: AppColor.textSecondary,
+      selectionHandleColor: AppColor.textSecondary,
+    ),
   );
 }
