@@ -36,7 +36,7 @@ class AppTheme {
       ),
       bodyLarge: TextStyle(
         fontSize: 16,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.bold,
         color: AppColor.textPrimary,
       ),
       bodyMedium: TextStyle(

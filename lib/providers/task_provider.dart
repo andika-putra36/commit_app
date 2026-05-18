@@ -5,33 +5,43 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 class TaskProvider with ChangeNotifier {
-  late Map<String, Task> _tasks;
+  List<Task> _tasks = [];
 
-  Map<String, Task> get tasks => _tasks;
+  List<Task> get tasks => _tasks;
+  int get countTasks => _tasks.length;
 
   Future<void> getTasks() async {
-    print('getTasks() is called');
-    Uri url = Uri.parse('${ApiConstants.baseUrl}/tasks');
+    try {
+      Uri url = Uri.parse(ApiConstants.getTasks);
 
-    var httpResponse = await http.get(url);
-    print(json.decode(httpResponse.body));
+      final httpResponse = await http.get(url);
 
-    // var dataResponse = json.decode(httpResponse.body) as Map<String, dynamic>;
+      final decoded = json.decode(httpResponse.body);
 
-    // dataResponse.forEach((key, value) {
-    //   _allPlayer.add(
-    //     Player(
-    //       id: key,
-    //       createdAt: DateFormat(
-    //         'yyyy-mm-dd hh:mm:ss',
-    //       ).parse(value['createdAt']),
-    //       imageUrl: value['imageUrl'],
-    //       name: value['name'],
-    //       position: value['position'],
-    //     ),
-    //   );
-    // });
+      // print(decoded);
 
-    notifyListeners();
+      final dataResponse = decoded["data"] as List;
+
+      _tasks.clear();
+
+      for (var value in dataResponse) {
+        _tasks.add(
+          Task(
+            id: value["id"],
+            title: value["title"],
+            subtitle: value["subtitle"],
+            startAt: value["start_at"],
+            finishAt: value["finish_at"],
+            isDone: value["is_done"],
+            createdAt: DateTime.parse(value["created_at"]),
+            updatedAt: DateTime.parse(value["updated_at"]),
+          ),
+        );
+      }
+
+      notifyListeners();
+    } catch (e) {
+      // print(e);
+    }
   }
 }
