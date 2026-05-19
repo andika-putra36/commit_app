@@ -29,7 +29,7 @@ class MasterBasePage extends StatelessWidget {
         onRefresh: () async {
           onRefresh?.call();
         },
-        child: Container(
+        child: SizedBox(
           height: AppSize.bodyHeight(context),
           width: AppSize.screenWidth(context),
           // color: Colors.amber,

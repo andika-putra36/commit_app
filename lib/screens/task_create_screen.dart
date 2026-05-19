@@ -1,8 +1,11 @@
-import 'package:commit_app/theme/app_color.dart';
-import 'package:commit_app/theme/app_theme.dart';
-import 'package:commit_app/utils/app_size.dart';
-import 'package:commit_app/widgets/divider.dart';
+import 'package:commit_app/models/create_task_request.dart';
 
+import '../providers/task_provider.dart';
+import '../theme/app_color.dart';
+import '../theme/app_theme.dart';
+import '../utils/app_size.dart';
+import '../widgets/divider.dart';
+import 'package:provider/provider.dart';
 import '../widgets/master_base_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,8 +21,6 @@ class TaskCreateScreen extends StatefulWidget {
 class _TaskCreateScreenState extends State<TaskCreateScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _subtitleController = TextEditingController();
-  final TextEditingController _startAtController = TextEditingController();
-  final TextEditingController _finishAtController = TextEditingController();
 
   TimeOfDay? _selectedStartAt;
   TimeOfDay? _selectedFinishAt;
@@ -41,8 +42,6 @@ class _TaskCreateScreenState extends State<TaskCreateScreen> {
   void dispose() {
     _titleController.dispose();
     _subtitleController.dispose();
-    _startAtController.dispose();
-    _finishAtController.dispose();
 
     super.dispose();
   }
@@ -51,6 +50,8 @@ class _TaskCreateScreenState extends State<TaskCreateScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final taskProvider = Provider.of<TaskProvider>(context);
+
     return MasterBasePage(
       masterChild: SizedBox(
         // height: AppSize.bodyHeight(context) / 1.8,
@@ -103,7 +104,7 @@ class _TaskCreateScreenState extends State<TaskCreateScreen> {
                       _pickTime(
                         onPicked: (time) {
                           _selectedStartAt = time;
-                          print(formatTimeOfDay(_selectedStartAt!));
+                          // print(formatTimeOfDay(_selectedStartAt!));
                         },
                       );
                     },
@@ -175,7 +176,31 @@ class _TaskCreateScreenState extends State<TaskCreateScreen> {
                     color: AppColor.textPrimary,
                   )
                 : ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      setState(() => _isLoading = true);
+
+                      try {
+                        await taskProvider.createTask(
+                          CreateTaskRequest(
+                            title: _titleController.text,
+                            subtitle: _subtitleController.text,
+                            startAt: formatTimeOfDay(_selectedStartAt!),
+                            finishAt: formatTimeOfDay(_selectedFinishAt!),
+                          ),
+                        );
+                        await taskProvider.getTasks();
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(taskProvider.message)),
+                        );
+
+                        Navigator.pop(context);
+                      } catch (e) {
+                        //
+                      } finally {
+                        setState(() => _isLoading = false);
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.background,
                       foregroundColor: AppColor.border,

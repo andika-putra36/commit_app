@@ -40,7 +40,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
 
     return MasterBasePage(
       onRefresh: () async {
-        Provider.of<TaskProvider>(context, listen: false).getTasks();
+        taskProvider.getTasks();
       },
       masterChild:
           taskProvider.countTasks !=
@@ -150,6 +150,8 @@ class TaskCard extends StatelessWidget {
               tasks[index].subtitle,
               style: AppTheme.lightTheme.textTheme.bodySmall,
               textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
             SizedBox(
               height: AppSize.screenHeight(context) / 30,
