@@ -1,5 +1,4 @@
-import 'package:commit_app/screens/task_create_screen.dart';
-
+import '../screens/task_create_screen.dart';
 import '../screens/task_detail_screen.dart';
 import '../theme/app_icon_size.dart';
 import '../widgets/master_base_screen.dart';
@@ -118,7 +117,10 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.of(context).pushNamed(TaskDetailScreen.routeName);
+        Navigator.of(context).pushNamed(
+          TaskDetailScreen.routeName,
+          arguments: {"id": tasks[index].id},
+        );
       },
       child: Container(
         // height: AppSize.screenHeight(context) / 5,
@@ -142,12 +144,12 @@ class TaskCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              tasks[index].title,
+              tasks[index].title!,
               style: AppTheme.lightTheme.textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
             Text(
-              tasks[index].subtitle,
+              tasks[index].subtitle!,
               style: AppTheme.lightTheme.textTheme.bodySmall,
               textAlign: TextAlign.center,
               maxLines: 2,
@@ -173,12 +175,12 @@ class TaskCard extends StatelessWidget {
                     ),
                     Text(' '),
                     Text(
-                      tasks[index].startAt.substring(0, 5),
+                      tasks[index].startAt!.substring(0, 5),
                       style: AppTheme.lightTheme.textTheme.bodySmall,
                     ),
                     Text(' - ', style: AppTheme.lightTheme.textTheme.bodySmall),
                     Text(
-                      tasks[index].finishAt.substring(0, 5),
+                      tasks[index].finishAt!.substring(0, 5),
                       style: AppTheme.lightTheme.textTheme.bodySmall,
                     ),
                   ],

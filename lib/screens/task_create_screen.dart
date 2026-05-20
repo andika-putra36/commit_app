@@ -1,5 +1,4 @@
-import 'package:commit_app/models/create_task_request.dart';
-
+import '../models/create_task_request.dart';
 import '../providers/task_provider.dart';
 import '../theme/app_color.dart';
 import '../theme/app_theme.dart';

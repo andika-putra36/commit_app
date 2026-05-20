@@ -8,9 +8,11 @@ import 'package:http/http.dart' as http;
 
 class TaskProvider with ChangeNotifier {
   List<Task> _tasks = [];
+  Task? _task;
   String _message = '';
 
   List<Task> get tasks => _tasks;
+  Task? get task => _task;
   String get message => _message;
   int get countTasks => _tasks.length;
 
@@ -39,6 +41,37 @@ class TaskProvider with ChangeNotifier {
           ),
         );
       }
+
+      notifyListeners();
+    } catch (e) {
+      // print(e);
+    }
+  }
+
+  Future<void> getTask(int id) async {
+    try {
+      print('getTask()');
+      Uri url = Uri.parse(
+        ApiConstants.getTask.replaceAll(':id', id.toString()),
+      );
+      print(url);
+
+      final httpResponse = await http.get(url);
+      final decoded = json.decode(httpResponse.body);
+      final dataResponse = decoded["data"] as Map<String, dynamic>;
+
+      _task = Task();
+
+      _task = Task(
+        id: dataResponse["id"],
+        title: dataResponse["title"],
+        subtitle: dataResponse["subtitle"],
+        startAt: dataResponse["start_at"],
+        finishAt: dataResponse["finish_at"],
+        isDone: dataResponse["is_done"],
+        createdAt: DateTime.parse(dataResponse["created_at"]),
+        updatedAt: DateTime.parse(dataResponse["updated_at"]),
+      );
 
       notifyListeners();
     } catch (e) {
