@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:commit_app/models/create_task_request.dart';
+import 'package:commit_app/models/update_task_request.dart';
 
 import '../constants/api_constants.dart';
 import '../models/task.dart';
@@ -50,11 +51,11 @@ class TaskProvider with ChangeNotifier {
 
   Future<void> getTask(int id) async {
     try {
-      print('getTask()');
+      // print('getTask()');
       Uri url = Uri.parse(
         ApiConstants.getTask.replaceAll(':id', id.toString()),
       );
-      print(url);
+      // print(url);
 
       final httpResponse = await http.get(url);
       final decoded = json.decode(httpResponse.body);
@@ -100,6 +101,52 @@ class TaskProvider with ChangeNotifier {
 
       notifyListeners();
       // print('createTask() finished');
+    } catch (e) {
+      // print(e);
+    }
+  }
+
+  Future<void> updateTask(int id, UpdateTaskRequest request) async {
+    try {
+      Uri url = Uri.parse(
+        ApiConstants.updateTask.replaceAll(':id', id.toString()),
+      );
+
+      final httpResponse = await http.patch(
+        url,
+        body: json.encode({
+          'title': request.title,
+          'subtitle': request.subtitle,
+          'start_at': request.startAt,
+          'finish_at': request.finishAt,
+          'is_done': request.isDone,
+        }),
+      );
+
+      final decoded = json.decode(httpResponse.body);
+      final dataResponse = decoded["message"] as String;
+
+      _message = dataResponse;
+
+      notifyListeners();
+    } catch (e) {
+      // print(e);
+    }
+  }
+
+  Future<void> deleteTask(int id) async {
+    try {
+      Uri url = Uri.parse(
+        ApiConstants.deleteTask.replaceAll(':id', id.toString()),
+      );
+
+      final httpResponse = await http.delete(url);
+      final decoded = json.decode(httpResponse.body);
+      final dataResponse = decoded["message"] as String;
+
+      _message = dataResponse;
+
+      notifyListeners();
     } catch (e) {
       // print(e);
     }

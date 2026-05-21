@@ -5,20 +5,27 @@ import 'package:flutter/material.dart';
 
 class MasterAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final Widget? child;
 
-  const MasterAppBar({super.key, required this.title});
+  const MasterAppBar({super.key, required this.title, this.child});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       // title: Text(title),
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset(
-            'assets/images/logo/commit_logo.png',
-            height: AppSize.appBarHeight(context),
-            fit: BoxFit.fill,
+          Row(
+            children: [
+              Image.asset(
+                'assets/images/logo/commit_logo.png',
+                height: AppSize.appBarHeight(context),
+                fit: BoxFit.fill,
+              ),
+            ],
           ),
+          child == null ? Container() : child!,
         ],
       ),
       backgroundColor: AppColor.background,

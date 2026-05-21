@@ -9,6 +9,7 @@ class MasterBasePage extends StatelessWidget {
   final Widget masterChild;
   final void Function()? floatingActionButton;
   final Widget? floatingActionButtonChild;
+  final Widget? appBarChild;
 
   const MasterBasePage({
     super.key,
@@ -17,12 +18,13 @@ class MasterBasePage extends StatelessWidget {
     required this.masterChild,
     this.floatingActionButton,
     this.floatingActionButtonChild,
+    this.appBarChild,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MasterAppBar(title: appBarTitle ?? ''),
+      appBar: MasterAppBar(title: appBarTitle ?? '', child: appBarChild),
       body: RefreshIndicator(
         color: AppColor.background,
         backgroundColor: AppColor.textPrimary,

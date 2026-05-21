@@ -1,3 +1,4 @@
+import '../utils/time_utils.dart';
 import '../models/create_task_request.dart';
 import '../providers/task_provider.dart';
 import '../theme/app_color.dart';
@@ -262,9 +263,9 @@ class TextFormString extends StatelessWidget {
   }
 }
 
-String formatTimeOfDay(TimeOfDay time) {
-  final hour = time.hour.toString().padLeft(2, '0');
-  final minute = time.minute.toString().padLeft(2, '0');
+// String formatTimeOfDay(TimeOfDay time) {
+//   final hour = time.hour.toString().padLeft(2, '0');
+//   final minute = time.minute.toString().padLeft(2, '0');
 
-  return '$hour:$minute:00';
-}
+//   return '$hour:$minute:00';
+// }

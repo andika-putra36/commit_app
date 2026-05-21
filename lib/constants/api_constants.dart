@@ -3,4 +3,6 @@ class ApiConstants {
   static const String getTasks = '$baseUrl/tasks';
   static const String getTask = '$baseUrl/tasks/:id';
   static const String createTask = '$baseUrl/tasks';
+  static const String updateTask = '$baseUrl/tasks/:id';
+  static const String deleteTask = '$baseUrl/tasks/:id';
 }
