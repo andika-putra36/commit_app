@@ -1,3 +1,5 @@
+import 'package:commit_app/screens/splash_screen.dart';
+
 import './providers/task_provider.dart';
 import './screens/task_detail_screen.dart';
 import './screens/task_create_screen.dart';
@@ -20,9 +22,11 @@ class CommitApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        home: TaskListScreen(),
-        initialRoute: TaskListScreen.routeName,
+        // home: TaskListScreen(),
+        // initialRoute: SplashScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         routes: {
+          SplashScreen.routeName: (context) => SplashScreen(),
           TaskListScreen.routeName: (context) => TaskListScreen(),
           TaskDetailScreen.routeName: (context) => TaskDetailScreen(),
           TaskCreateScreen.routeName: (context) => TaskCreateScreen(),

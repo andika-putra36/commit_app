@@ -115,8 +115,9 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final taskProvider = Provider.of<TaskProvider>(context);
     return TextButton(
-      onPressed: () {
+      onPressed: () async {
         Navigator.of(context).pushNamed(
           TaskDetailScreen.routeName,
           arguments: {"id": tasks[index].id},

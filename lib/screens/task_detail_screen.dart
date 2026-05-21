@@ -60,7 +60,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     super.didChangeDependencies();
 
     final args =
@@ -68,7 +68,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     final id = args["id"] as int;
 
     if (isInit) {
-      Provider.of<TaskProvider>(context).getTask(id);
+      await Provider.of<TaskProvider>(context).getTask(id);
       final taskProvider = Provider.of<TaskProvider>(context, listen: false);
       _titleController.text = taskProvider.task!.title!;
       _subtitleController.text = taskProvider.task!.subtitle!;

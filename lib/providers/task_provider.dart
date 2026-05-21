@@ -61,8 +61,6 @@ class TaskProvider with ChangeNotifier {
       final decoded = json.decode(httpResponse.body);
       final dataResponse = decoded["data"] as Map<String, dynamic>;
 
-      _task = Task();
-
       _task = Task(
         id: dataResponse["id"],
         title: dataResponse["title"],
