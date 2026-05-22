@@ -18,6 +18,7 @@ class TaskProvider with ChangeNotifier {
   int get countTasks => _tasks.length;
 
   Future<void> getTasks() async {
+    _tasks.clear();
     try {
       // print('getTasks()');
       Uri url = Uri.parse(ApiConstants.getTasks);
@@ -25,8 +26,6 @@ class TaskProvider with ChangeNotifier {
       final httpResponse = await http.get(url);
       final decoded = json.decode(httpResponse.body);
       final dataResponse = decoded["data"] as List;
-
-      _tasks.clear();
 
       for (var value in dataResponse) {
         _tasks.add(
@@ -133,6 +132,7 @@ class TaskProvider with ChangeNotifier {
   }
 
   Future<void> deleteTask(int id) async {
+    print('deleteTask()');
     try {
       Uri url = Uri.parse(
         ApiConstants.deleteTask.replaceAll(':id', id.toString()),
@@ -148,5 +148,6 @@ class TaskProvider with ChangeNotifier {
     } catch (e) {
       // print(e);
     }
+    print('deleteTask() is done');
   }
 }

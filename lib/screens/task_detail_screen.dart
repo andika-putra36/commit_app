@@ -1,3 +1,4 @@
+import 'package:commit_app/models/update_task_request.dart';
 import 'package:commit_app/providers/task_provider.dart';
 import 'package:commit_app/theme/app_color.dart';
 import 'package:commit_app/theme/app_theme.dart';
@@ -33,7 +34,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   bool _oldFinished = false;
 
   bool _isEditSaveLoading = false;
-  bool _isDeleteSaveLoading = false;
+  bool _isDeleteLoading = false;
   bool _isEditMode = false;
 
   Future<void> _pickTime({required void Function(TimeOfDay) onPicked}) async {
@@ -88,14 +89,10 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final taskProvider = Provider.of<TaskProvider>(context);
-    // _titleController.text = taskProvider.task!.title!;
-    // _subtitleController.text = taskProvider.task!.subtitle!;
-    // _selectedStartAt = timeOfDayFromString(taskProvider.task!.startAt!);
-    // _selectedFinishAt = timeOfDayFromString(taskProvider.task!.finishAt!);
-    // _finished = taskProvider.task!.isDone!;
-
-    // print(_finished);
+    final taskProvider = Provider.of<TaskProvider>(context);
+    final args =
+        ModalRoute.of(context)!.settings.arguments! as Map<String, dynamic>;
+    final id = args["id"] as int;
 
     return MasterBasePage(
       appBarChild: Row(
@@ -360,9 +357,47 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 Navigator.pop(context);
-                                // your action here
+                                setState(() => _isDeleteLoading = true);
+
+                                try {
+                                  // await taskProvider.createTask(
+                                  //   CreateTaskRequest(
+                                  //     title: _titleController.text,
+                                  //     subtitle: _subtitleController.text,
+                                  //     startAt: formatTimeOfDay(_selectedStartAt!),
+                                  //     finishAt: formatTimeOfDay(_selectedFinishAt!),
+                                  //   ),
+                                  // );
+                                  // await taskProvider.updateTask(
+                                  //   id,
+                                  //   UpdateTaskRequest(
+                                  //     title: _titleController.text,
+                                  //     subtitle: _subtitleController.text,
+                                  //     startAt: formatTimeOfDay(_selectedStartAt!),
+                                  //     finishAt: formatTimeOfDay(_selectedFinishAt!),
+                                  //     isDone: _finished,
+                                  //   ),
+                                  // );
+                                  await taskProvider.deleteTask(id).then((
+                                    value,
+                                  ) async {
+                                    await taskProvider.getTasks();
+                                  });
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(taskProvider.message),
+                                    ),
+                                  );
+
+                                  Navigator.pop(context);
+                                } catch (e) {
+                                  //
+                                } finally {
+                                  setState(() => _isDeleteLoading = false);
+                                }
                               },
                               child: Text(
                                 'Confirm',
@@ -376,29 +411,6 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                           ],
                         ),
                       );
-                      // setState(() => _isDeleteSaveLoading = true);
-
-                      // try {
-                      //   await taskProvider.createTask(
-                      //     CreateTaskRequest(
-                      //       title: _titleController.text,
-                      //       subtitle: _subtitleController.text,
-                      //       startAt: formatTimeOfDay(_selectedStartAt!),
-                      //       finishAt: formatTimeOfDay(_selectedFinishAt!),
-                      //     ),
-                      //   );
-                      //   await taskProvider.getTasks();
-
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     SnackBar(content: Text(taskProvider.message)),
-                      //   );
-
-                      //   Navigator.pop(context);
-                      // } catch (e) {
-                      //   //
-                      // } finally {
-                      //   setState(() => _isDeleteSaveLoading = false);
-                      // }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.background,
