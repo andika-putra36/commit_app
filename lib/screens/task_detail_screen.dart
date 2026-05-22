@@ -300,29 +300,38 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                         )
                       : ElevatedButton(
                           onPressed: () async {
-                            // setState(() => _isEditSaveLoading = true);
+                            setState(() => _isEditSaveLoading = true);
 
-                            // try {
-                            //   await taskProvider.createTask(
-                            //     CreateTaskRequest(
-                            //       title: _titleController.text,
-                            //       subtitle: _subtitleController.text,
-                            //       startAt: formatTimeOfDay(_selectedStartAt!),
-                            //       finishAt: formatTimeOfDay(_selectedFinishAt!),
-                            //     ),
-                            //   );
-                            //   await taskProvider.getTasks();
+                            try {
+                              await taskProvider
+                                  .updateTask(
+                                    id,
+                                    UpdateTaskRequest(
+                                      title: _titleController.text,
+                                      subtitle: _subtitleController.text,
+                                      startAt: formatTimeOfDay(
+                                        _selectedStartAt!,
+                                      ),
+                                      finishAt: formatTimeOfDay(
+                                        _selectedFinishAt!,
+                                      ),
+                                      isDone: _finished,
+                                    ),
+                                  )
+                                  .then((_) async {
+                                    await taskProvider.getTasks();
+                                  });
 
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //     SnackBar(content: Text(taskProvider.message)),
-                            //   );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(taskProvider.message)),
+                              );
 
-                            //   Navigator.pop(context);
-                            // } catch (e) {
-                            //   //
-                            // } finally {
-                            //   setState(() => _isEditSaveLoading = false);
-                            // }
+                              Navigator.pop(context);
+                            } catch (e) {
+                              //
+                            } finally {
+                              setState(() => _isEditSaveLoading = false);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColor.background,
@@ -381,7 +390,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                   //   ),
                                   // );
                                   await taskProvider.deleteTask(id).then((
-                                    value,
+                                    _,
                                   ) async {
                                     await taskProvider.getTasks();
                                   });
