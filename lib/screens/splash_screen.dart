@@ -1,4 +1,6 @@
 import 'package:commit_app/screens/task_list_screen.dart';
+import 'package:commit_app/theme/app_theme.dart';
+import 'package:commit_app/widgets/divider.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -28,10 +30,20 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Image.asset(
-          'assets/images/logo/commit_2nd_logo.png',
-          height: 200,
-          // fit: BoxFit.scaleDown,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/logo/commit_2nd_logo.png',
+              height: 200,
+              // fit: BoxFit.scaleDown,
+            ),
+            CleanDivider(),
+            Text(
+              'By Andika Putra',
+              style: AppTheme.lightTheme.textTheme.titleSmall,
+            ),
+          ],
         ),
       ),
     );
